@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Profile</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">PennStateSoft</a>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <!--Meetings-->
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Meetings
+                            </a>
+                            <!--Complaint-->
+                            <a class="nav-link collapsed" href="complaint.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-mail-bulk"></i></div>
+                                Complaint
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        PennStateSoft
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Profile</h1>
+                        <div class="row mx-0 justify-content-center">
+                            <div class="col-md-7 col-lg-5 px-lg-2 col-xl-4 px-xl-0 px-xxl-3">
+                                <form class="w-100 rounded-1 p-4 border bg-white">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <!--First Name-->
+                                            <label class="d-block mb-4">
+                                                <span class="form-label d-block">First Name</span>
+                                                <input
+                                                    name="first-name"
+                                                    type="text"
+                                                    class="form-control"
+                                                    placeholder="First"
+                                                />
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!--Last Name-->
+                                            <label class="d-block mb-4">
+                                                <span class="form-label d-block">Last Name</span>
+                                                <input
+                                                    name="last-name"
+                                                    type="text"
+                                                    class="form-control"
+                                                    placeholder="Last"
+                                                />
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!--Email-->
+                                        <label class="d-block mb-4">
+                                            <span class="form-label d-block">Email address</span>
+                                            <input
+                                                name="email"
+                                                type="email"
+                                                class="form-control"
+                                                placeholder="Email"
+                                            />
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                        <!--Phone Number-->
+                                        <label class="d-block mb-4">
+                                            <span class="form-label d-block">Phone Number</span>
+                                            <input
+                                                name="phone"
+                                                type="tel"
+                                                class="form-control"
+                                                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                                            />
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <!-- Submit Button -->
+                                            <div class="mb-3">
+                                                <button type="submit" class="btn btn-primary px-3 rounded-3">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">PennStateSoft - SU2024 | Chibuike, Grant, Nathan, William</div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
