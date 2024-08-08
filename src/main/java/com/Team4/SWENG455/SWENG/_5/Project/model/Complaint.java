@@ -1,12 +1,14 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
+import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.data.annotation.*;
 
-import jakarta.persistence.*;
 
-@Entity
+
+@Document
 public class Complaint {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int complaintID;
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer complaintID;
     
     private int userID;
     private String description;

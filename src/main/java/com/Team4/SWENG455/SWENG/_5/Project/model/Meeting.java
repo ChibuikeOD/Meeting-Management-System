@@ -1,21 +1,20 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
-
-
-import jakarta.persistence.*;
+import org.springframework.data.mongodb.core.mapping.*;
 import java.util.List;
+import org.springframework.data.annotation.*;
 
-@Entity
+@Document
 public class Meeting {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int meetingID;
+  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer meetingID;
     
     private String title;
     private String description;
     private String startTime;
     private String endTime;
     
-    @ManyToMany
+ //   @ManyToMany
     private List<User> participants;
 
     public int getMeetingID() {

@@ -1,12 +1,14 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
+import org.springframework.data.mongodb.core.mapping.*;
+import org.springframework.data.annotation.*;
 
-import jakarta.persistence.*;
 
-@Entity
+@Document
 public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roomID;
+  
+ //   @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+    private Integer roomID;
     
     private String name;
     private int capacity;

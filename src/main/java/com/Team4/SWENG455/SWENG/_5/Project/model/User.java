@@ -1,23 +1,24 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
-
-import jakarta.persistence.*;
+import org.springframework.data.annotation.*;
+import org.springframework.data.mongodb.core.mapping.*;
 import java.util.List;
 
-@Entity
+@Document
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userID;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+    private Integer userID;
     
     private String name;
     private String email;
     private String password;
     
-    @OneToMany(mappedBy = "user")
+//    @OneToMany(mappedBy = "user")
     private List<Meeting> meetings;
     
-    @ManyToOne
-    @JoinColumn(name = "controller_id")
+//    @ManyToOne
+//    @JoinColumn(name = "controller_id")
     private Controller userControl;
 
    

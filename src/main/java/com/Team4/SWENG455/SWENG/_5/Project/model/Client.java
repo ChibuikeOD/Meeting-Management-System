@@ -1,7 +1,9 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
-import jakarta.persistence.*;
+import org.springframework.data.mongodb.core.mapping.*;
 
-@Entity
+
+
+@Document
 public class Client extends User {
 	public void createMeeting() {
         
