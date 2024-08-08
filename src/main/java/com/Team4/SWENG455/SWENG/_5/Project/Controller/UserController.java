@@ -1,5 +1,7 @@
 package com.Team4.SWENG455.SWENG._5.Project.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +24,16 @@ public class UserController {
 		userRepo.save(user);
 	}
 	
-	@GetMapping("/getUser/{id}") //indicates this class handles post requests
-	public User getUser(@PathVariable Integer id) //specifies the class to put the data in
+	@GetMapping("/getUser/{id}") 
+	public User getUser(@PathVariable Integer id) 
 	{
 		return userRepo.findById(id).orElse(null);
+	}
+	
+	@GetMapping("/fetchUsers") 
+	public List<User> fetchUsers() 
+	{
+		return userRepo.findAll();
 	}
 
 }
