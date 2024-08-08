@@ -1,6 +1,9 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.*;
+
+import com.Team4.SWENG455.SWENG._5.Project.Controller.UserController;
+
 import java.util.List;
 
 @Document
@@ -19,7 +22,7 @@ public class User {
     
 //    @ManyToOne
 //    @JoinColumn(name = "controller_id")
-    private Controller userControl;
+    private UserController userControl;
 
    
     public int getUserID() {
@@ -62,11 +65,11 @@ public class User {
         this.meetings = meetings;
     }
 
-    public Controller getUserControl() {
+    public UserController getUserControl() {
         return userControl;
     }
 
-    public void setUserControl(Controller userControl) {
+    public void setUserControl(UserController userControl) {
         this.userControl = userControl;
     }
     

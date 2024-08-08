@@ -1,5 +1,8 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
 import org.springframework.data.mongodb.core.mapping.*;
+
+import com.Team4.SWENG455.SWENG._5.Project.Controller.MeetingController;
+
 import java.util.List;
 import org.springframework.data.annotation.*;
 
@@ -14,6 +17,7 @@ public class Meeting {
     private String startTime;
     private String endTime;
     
+    private MeetingController meetingControl;
  //   @ManyToMany
     private List<User> participants;
 
@@ -80,6 +84,16 @@ public class Meeting {
     public void removeParticipant(User newUser) {
         
     
+    }
+    
+    public void setMeetingController(MeetingController m)
+    {
+    	meetingControl = m;
+    }
+    
+    public MeetingController getMeetingController()
+    {
+    	return meetingControl;
     }
     
 }

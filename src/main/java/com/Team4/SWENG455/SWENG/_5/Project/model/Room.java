@@ -1,5 +1,8 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
 import org.springframework.data.mongodb.core.mapping.*;
+
+import com.Team4.SWENG455.SWENG._5.Project.Controller.RoomController;
+
 import org.springframework.data.annotation.*;
 
 
@@ -14,7 +17,7 @@ public class Room {
     private int capacity;
     
    
-    private Controller roomControl;
+    private RoomController roomControl;
 
    
     
@@ -58,11 +61,11 @@ public class Room {
         this.capacity = capacity;
     }
 
-    public Controller getRoomControl() {
+    public RoomController getRoomControl() {
         return roomControl;
     }
 
-    public void setRoomControl(Controller roomControl) {
+    public void setRoomControl(RoomController roomControl) {
         this.roomControl = roomControl;
     }
 

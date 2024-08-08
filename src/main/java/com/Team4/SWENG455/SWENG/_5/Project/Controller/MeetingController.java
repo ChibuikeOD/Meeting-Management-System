@@ -52,6 +52,7 @@ public class MeetingController {
 			meet.setStartTime(data.getStartTime());
 			meet.setTitle(data.getEndTime());
 			meet.setMeetingID(data.getMeetingID());
+			meet.setMeetingController(data.getMeetingController());
 		
 			meetRepo.save(meet);
 		}

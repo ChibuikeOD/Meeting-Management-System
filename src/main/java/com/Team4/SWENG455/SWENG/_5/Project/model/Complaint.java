@@ -1,5 +1,8 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
 import org.springframework.data.mongodb.core.mapping.*;
+
+import com.Team4.SWENG455.SWENG._5.Project.Controller.ComplaintController;
+
 import org.springframework.data.annotation.*;
 
 
@@ -17,7 +20,7 @@ public class Complaint {
     
     private Room room;
   
-    private Controller complaintControl;
+    private ComplaintController complaintControl;
 
     public int getComplaintID() {
         return complaintID;
@@ -59,11 +62,11 @@ public class Complaint {
         this.room = room;
     }
 
-    public Controller getComplaintControl() {
+    public ComplaintController getComplaintControl() {
         return complaintControl;
     }
 
-    public void setComplaintControl(Controller complaintControl) {
+    public void setComplaintControl(ComplaintController complaintControl) {
         this.complaintControl = complaintControl;
     }
 
