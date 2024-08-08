@@ -73,11 +73,11 @@ public class Meeting {
        
     }
 
-    public void addParticipant() {
-        
+    public void addParticipant(User newUser) {
+        participants.add(newUser);
     }
 
-    public void removeParticipant() {
+    public void removeParticipant(User newUser) {
         
     
     }
