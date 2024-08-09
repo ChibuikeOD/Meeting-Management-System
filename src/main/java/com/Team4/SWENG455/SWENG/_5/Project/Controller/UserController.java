@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Team4.SWENG455.SWENG._5.Project.Repository.UserRepo;
+import com.Team4.SWENG455.SWENG._5.Project.model.Admin;
+import com.Team4.SWENG455.SWENG._5.Project.model.Client;
 import com.Team4.SWENG455.SWENG._5.Project.model.Meeting;
 import com.Team4.SWENG455.SWENG._5.Project.model.User;
 
@@ -36,26 +38,39 @@ public class UserController {
 	        @RequestParam("firstName") String firstName,
 	        @RequestParam("lastName") String lastName,
 	        @RequestParam("email") String email,
-	        @RequestParam("password") String password) {
-	    
+	        @RequestParam("password") String password,
+	        @RequestParam("accountType") String accountType) {
+
 	    try {
 	        User user = new User();
+
+	        // Check the account type and instantiate the appropriate class
+	        if ("admin".equalsIgnoreCase(accountType)) {
+	            user.setAdmin(true);
+	        } else {
+	            user.setAdmin(false);  // Default to Client if not admin
+	        }
+	        System.out.println(accountType);
+	        // Set common properties
 	        user.setUserID(UUID.randomUUID().toString()); // Generate unique ID
 	        String name = firstName + " " + lastName;
 	        user.setName(name);
 	        user.setEmail(email);
 	        user.setPassword(password);
-	        
+
+	        // Save the user to the repository
 	        userRepo.save(user);
 	        System.out.println("Saved user: " + user.getName());
+	        
 	        return ResponseEntity.status(HttpStatus.FOUND)
-                    .location(URI.create("/login.html"))
-                    .build();
+	                .location(URI.create("/login.html"))
+	                .build();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
+
 
 	
 		
@@ -78,7 +93,7 @@ public class UserController {
 
 	                // Redirect to home.html on successful login
 	                return ResponseEntity.status(HttpStatus.FOUND)
-	                                     .location(URI.create("/home.html"))
+	                                     .location(URI.create("/home"))
 	                                     .build();
 	            } else {
 	                // Redirect back to login page with an error query parameter
@@ -110,6 +125,21 @@ public class UserController {
 	        return "redirect:/login.html";
 	    }
 	}
+	
+//	@GetMapping("/home")
+//	public ResponseEntity<Void> homePage(HttpSession session) {
+//	    User loggedInUser = (User) session.getAttribute("loggedInUser");
+//
+//	    if (loggedInUser instanceof Admin) {
+//	        return ResponseEntity.status(HttpStatus.FOUND)
+//	                             .location(URI.create("/home-admin.html"))
+//	                             .build();
+//	    } else {
+//	        return ResponseEntity.status(HttpStatus.FOUND)
+//	                             .location(URI.create("/home.html"))
+//	                             .build();
+//	    }
+//	}
 
 
 

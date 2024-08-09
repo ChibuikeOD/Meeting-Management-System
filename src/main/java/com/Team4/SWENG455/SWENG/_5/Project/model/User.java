@@ -7,7 +7,7 @@ import com.Team4.SWENG455.SWENG._5.Project.Controller.UserController;
 import java.util.List;
 
 @Document(collection = "user")
-public class User {
+public  class User {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
@@ -16,6 +16,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private boolean isAdmin = false;
     
 //    @OneToMany(mappedBy = "user")
     private List<Meeting> meetings;
@@ -80,6 +81,21 @@ public class User {
     public void logout() {
        //needs to log out / clearing session or authentication
     }
+
+    public  void makeAdmin()
+    {
+    	setAdmin(false);
+    }
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	};
+    
+    
 
 //    public List<Meeting> viewMeetings() {
 //        return userControl.getUserMeetings(userID);

@@ -20,4 +20,8 @@ public class Admin extends User {
     public void manageMeetings() {
         
     }
+    
+    public boolean isAdmin() {
+        return true;
+    }
 }

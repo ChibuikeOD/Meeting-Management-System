@@ -77,20 +77,35 @@ public class MeetingController {
     
     @GetMapping("/home")
     public ResponseEntity<Void> homePage(HttpSession session) {
-        // Assuming your session is properly set up with the required attributes
+        // Check if the user is logged in
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            // Redirect to login page if no user is logged in
+            URI loginUri = URI.create("/login.html");
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(loginUri);
+            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+        }
 
-        // Normally you'd add meetings to a model and return a view, but to demonstrate using ResponseEntity:
-        List<Meeting> meetings = meetingRepository.findAll();
+        // Assuming roles are differentiated by some attribute in the User class, e.g., a boolean isAdmin
+    //    boolean isAdmin = loggedInUser.isAdmin(); // Adjust this line based on your User class structure
 
-        // You would normally return a view like this, but instead, we'll redirect:
-        // return new ModelAndView("home", "meetings", meetings);
+        // Redirect to the appropriate home page
+        System.out.println(loggedInUser.isAdmin());
+        URI homeUri;
+        if (loggedInUser.isAdmin()) {
+            homeUri = URI.create("/home-admin.html");
+        } else {
+            homeUri = URI.create("/home.html");
+        }
 
-        // Redirect to the home page with the meetings loaded
-        URI homeUri = URI.create("/home.html");
+        // Headers for redirection
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(homeUri);
+
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
+
     
     @PostMapping("/joinMeeting/{meetingId}")
     public ResponseEntity<Void> joinMeeting(@PathVariable("meetingId") String meetingId, HttpSession session) {

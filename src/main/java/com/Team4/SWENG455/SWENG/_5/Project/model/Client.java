@@ -32,4 +32,8 @@ public class Client extends User {
 
         complaintRepo.save(complaint);
     }
+    
+    public boolean isAdmin() {
+        return false;
+    }
 }
