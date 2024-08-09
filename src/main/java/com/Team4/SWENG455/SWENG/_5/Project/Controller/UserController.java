@@ -58,32 +58,41 @@ public class UserController {
 		
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(
+	public ResponseEntity<Void> login(
 	        @RequestParam("email") String email,
 	        @RequestParam("password") String password) {
-	    
+
 	    try {
-	        // Attempt to find the user by email
 	        Optional<User> optionalUser = userRepo.findByEmail(email);
-	        
+
 	        if (optionalUser.isPresent()) {
 	            User user = optionalUser.get();
-	            
-	            // Check if the provided password matches the stored password
+
 	            if (user.getPassword().equals(password)) {
-	                return new ResponseEntity<>("Login successful", HttpStatus.OK);
+	                // Redirect to home.html on successful login
+	                return ResponseEntity.status(HttpStatus.FOUND)
+	                                     .location(URI.create("/home.html"))
+	                                     .build();
 	            } else {
-	                return new ResponseEntity<>("Login failed: Incorrect password", HttpStatus.UNAUTHORIZED);
+	                // Redirect back to login page with an error query parameter
+	                return ResponseEntity.status(HttpStatus.FOUND)
+	                                     .location(URI.create("/login.html?error=true"))
+	                                     .build();
 	            }
 	        } else {
-	            return new ResponseEntity<>("Login failed: Email not found", HttpStatus.UNAUTHORIZED);
+	            // Redirect back to login page with an error query parameter
+	            return ResponseEntity.status(HttpStatus.FOUND)
+	                                 .location(URI.create("/login.html?error=true"))
+	                                 .build();
 	        }
-	        
+
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return new ResponseEntity<>("An error occurred during login", HttpStatus.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
+
+
 	
 	@GetMapping("/fetchUsers") 
 	public List<User> fetchUsers() 
