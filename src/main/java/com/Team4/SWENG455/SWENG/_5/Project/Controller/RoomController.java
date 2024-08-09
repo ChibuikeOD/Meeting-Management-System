@@ -3,6 +3,8 @@ package com.Team4.SWENG455.SWENG._5.Project.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,11 +38,7 @@ public class RoomController {
 		return roomRepo.findById(id).orElse(null);
 	}
 	
-	@GetMapping("/fetchRooms") 
-	public List<Room> fetchRooms() 
-	{
-		return roomRepo.findAll();
-	}
+
 	
 	@PutMapping("/updateRoom") 
 	public void updateRoom(@RequestBody Room room) 
@@ -57,6 +55,12 @@ public class RoomController {
 		}
 		
 	}
+	
+	@GetMapping("/api/rooms")
+    public ResponseEntity<List<Room>> fetchRooms() {
+        List<Room> rooms = roomRepo.findAll();
+        return new ResponseEntity<>(rooms, HttpStatus.OK);
+    }
 	
 	@DeleteMapping("/deleteRoom/{id}") //the function takes in an id
 	//Removed @PathVariable Integer id
