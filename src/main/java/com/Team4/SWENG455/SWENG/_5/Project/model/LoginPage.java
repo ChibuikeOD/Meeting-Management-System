@@ -25,9 +25,9 @@ public class LoginPage extends GenericForm{
             return false;
         }
 
-        User user = UserRepo.findusername(username);
+     //   User user = UserRepo.findusername(username);
 
-        return user != null && user.getPassword().equals(password);
+       return false;
 
 
     }
@@ -44,5 +44,4 @@ public class LoginPage extends GenericForm{
 
         }
     }
-}
 }
