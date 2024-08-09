@@ -17,17 +17,17 @@ public class MeetingDashboard {
         return MeetingRepo.findAll();
     }
 
-    public Meeting viewMeetingDetails(String meetingID) {
-        Optional<Meeting> meeting = MeetingRepo.findById(Integer.parseInt(meetingID));
-        return meeting.orElse(null);
-    }
+//    public Meeting viewMeetingDetails(String meetingID) {
+//        Optional<Meeting> meeting = MeetingRepo.findById(Integer.parseInt(meetingID));
+//        return meeting.orElse(null);
+//    }
 
-    public void cancelMeeting(String meetingID) {
-        Optional<Meeting> meeting = MeetingRepo.findById(Integer.parseInt(meetingID));
-        if (meeting.isPresent()) {
-            MeetingRepo.delete(meeting.get());
-        }
-    }
+//    public void cancelMeeting(String meetingID) {
+//        Optional<Meeting> meeting = MeetingRepo.findById(Integer.parseInt(meetingID));
+//        if (meeting.isPresent()) {
+//            MeetingRepo.delete(meeting.get());
+//        }
+//    }
 
     public Meeting scheduleNewMeeting(Meeting meeting) {
         return MeetingRepo.save(meeting);

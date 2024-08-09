@@ -1,68 +1,68 @@
 package com.Team4.SWENG455.SWENG._5.Project.Controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import com.Team4.SWENG455.SWENG._5.Project.Repository.MeetingRepo;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.Team4.SWENG455.SWENG._5.Project.Repository.MeetingRepo;
+import com.Team4.SWENG455.SWENG._5.Project.Repository.UserRepo;
 import com.Team4.SWENG455.SWENG._5.Project.model.Meeting;
 import com.Team4.SWENG455.SWENG._5.Project.model.User;
 
+import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-@RestController
+import java.net.URI;
+
+@Controller
 public class MeetingController {
-	
-	@Autowired
-	MeetingRepo meetRepo;
 
-	@PostMapping("/addMeeting")
-	public void addMeeting(@RequestBody Meeting meeting) 
-	{
-		meetRepo.save(meeting);
-	}
-	
-	@GetMapping("/getMeeting/{id}")
-	public Meeting getMeeting(@PathVariable Integer id) 
-	{
-		return meetRepo.findById(id).orElse(null);
-	}
-	
-	@GetMapping("/fetchMeetings") 
-	public List<Meeting> fetchMeetings() 
-	{
-		return meetRepo.findAll();
-	}
-	
-	@PutMapping("/updateMeeting")
-	public void updateMeeting(@RequestBody Meeting meet) 
-	{
-		Meeting data = meetRepo.findById(meet.getMeetingID()).orElse(null);
-	
-		if(data != null)
-		{
-			meet.setDescription(data.getDescription());
-			meet.setEndTime(data.getEndTime());
-			meet.setStartTime(data.getStartTime());
-			meet.setTitle(data.getEndTime());
-			meet.setMeetingID(data.getMeetingID());
-			meet.setMeetingController(data.getMeetingController());
-		
-			meetRepo.save(meet);
-		}
-		
-	}
-	
-	@DeleteMapping("/deleteMeeting/{id}") //the function takes in an id
-	public void deleteMeeting(@PathVariable Integer id) 
-	{
-		meetRepo.deleteById(id);
-	}
+    @Autowired
+    private MeetingRepo meetingRepository;
 
+    @Autowired
+    private UserRepo userRepository;
+
+    @PostMapping("/createMeeting")
+    public ResponseEntity<Void> createMeeting(@RequestParam("title") String title,
+                                              @RequestParam("description") String description,
+                                              @RequestParam("startTime") String startTime,
+                                              HttpSession session) {
+
+        // Retrieve the logged-in user from the session
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null) {
+            // If no user is logged in, redirect to the login page
+            URI loginUri = URI.create("/login.html");
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(loginUri);
+            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+        }
+
+        // Create a new Meeting object
+        Meeting meeting = new Meeting();
+        meeting.setTitle(title);
+        meeting.setDescription(description);
+        meeting.setStartTime(startTime);
+        System.out.println(meeting.getStartTime());
+
+        // Add the logged-in user as a participant
+        meeting.addParticipant(loggedInUser);
+        System.out.println(loggedInUser.getName());
+        // Save the meeting to the database
+        meetingRepository.save(meeting);
+
+        // Prepare the redirect URL (e.g., to the home page)
+        URI redirectUri = URI.create("/home.html");
+
+        // Return a ResponseEntity with a FOUND status and the Location header for redirection
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(redirectUri);
+        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+    }
 }

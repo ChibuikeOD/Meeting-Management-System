@@ -11,7 +11,7 @@ import org.springframework.data.annotation.*;
 public class Meeting {
     @Id
   //  @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer meetingID;
+    private String meetingID;
     
     private String title;
     private String description;
@@ -22,11 +22,11 @@ public class Meeting {
  //   @ManyToMany
     private List<User> participants = new ArrayList<>();
 
-    public int getMeetingID() {
+    public String getMeetingID() {
         return meetingID;
     }
 
-    public void setMeetingID(int meetingID) {
+    public void setMeetingID(String meetingID) {
         this.meetingID = meetingID;
     }
 

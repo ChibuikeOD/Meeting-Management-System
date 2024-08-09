@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Team4.SWENG455.SWENG._5.Project.Repository.UserRepo;
 import com.Team4.SWENG455.SWENG._5.Project.model.Meeting;
 import com.Team4.SWENG455.SWENG._5.Project.model.User;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController //annotation to indicate the class is a Controller
 public class UserController {
@@ -60,7 +63,8 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<Void> login(
 	        @RequestParam("email") String email,
-	        @RequestParam("password") String password) {
+	        @RequestParam("password") String password,
+	        HttpSession session) {
 
 	    try {
 	        Optional<User> optionalUser = userRepo.findByEmail(email);
@@ -69,6 +73,9 @@ public class UserController {
 	            User user = optionalUser.get();
 
 	            if (user.getPassword().equals(password)) {
+	                // Store the user in the session
+	                session.setAttribute("loggedInUser", user);
+
 	                // Redirect to home.html on successful login
 	                return ResponseEntity.status(HttpStatus.FOUND)
 	                                     .location(URI.create("/home.html"))
@@ -91,6 +98,19 @@ public class UserController {
 	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
+	
+	@GetMapping("/profile")
+	public String getProfile(HttpSession session, Model model) {
+	    User loggedInUser = (User) session.getAttribute("loggedInUser");
+	    
+	    if (loggedInUser != null) {
+	        model.addAttribute("user", loggedInUser);
+	        return "profile";
+	    } else {
+	        return "redirect:/login.html";
+	    }
+	}
+
 
 
 	

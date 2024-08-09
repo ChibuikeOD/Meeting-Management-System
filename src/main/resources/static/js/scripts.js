@@ -1,13 +1,7 @@
-/*!
-    * Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)
-    * Copyright 2013-2023 Start Bootstrap
-    * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
-    */
-
 window.addEventListener('DOMContentLoaded', event => {
     // Create meeting modal
-    const createMeeting = document.body.querySelector('#createMeeting');
-    const closeMeetingModal = document.body.querySelector('#modalCloseButton');
+    const createMeeting = document.getElementById('createMeeting');
+    const closeMeetingModal = document.getElementById('modalCloseButton');
 
     if (createMeeting && closeMeetingModal) {
         var modal = new bootstrap.Modal(document.getElementById('createMeetingModal'));
@@ -20,9 +14,9 @@ window.addEventListener('DOMContentLoaded', event => {
             modal.hide();
         });
     }
-
+    
     // Time constraint
-    const meetingTimeField = document.body.querySelector('#meetingTime');
+    const meetingTimeField = document.getElementById('meetingTime');
 
     if (meetingTimeField) {
         meetingTimeField.addEventListener('blur', event => {
@@ -32,6 +26,46 @@ window.addEventListener('DOMContentLoaded', event => {
             } else if (meetingTimeField.value > meetingTimeField.max) {
                 meetingTimeField.value = meetingTimeField.max;
             }
+        });
+    }
+
+    // Handle form submission to create a meeting
+    const submitMeetingButton = document.getElementById('submitMeeting');
+
+    if (submitMeetingButton) {
+        submitMeetingButton.addEventListener('click', function() {
+            const meetingTitle = document.getElementById('meetname').value;
+            const meetingRoom = document.getElementById('meetingRoom').value;
+            const meetingTime = document.getElementById('meetingTime').value;
+
+            const meetingData = {
+                title: meetingTitle,
+                room: meetingRoom,
+                time: meetingTime
+            };
+
+            // Send the data to the server using fetch (or AJAX)
+            fetch('/api/meetings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(meetingData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Close the modal, refresh the meeting list, etc.
+                    modal.hide();
+                    alert('Meeting created successfully!');
+                    // Optionally refresh the meeting list here
+                } else {
+                    alert('Failed to create meeting.');
+                }
+            })
+            .catch(error => {
+                console.error('Error creating meeting:', error);
+                alert('An error occurred while creating the meeting.');
+            });
         });
     }
 });

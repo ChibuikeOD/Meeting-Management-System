@@ -23,11 +23,11 @@ public class Client extends User {
         meetingRepo.save(meeting);
     }
 
-    public void deleteMeeting(Integer meetingId) {
-
-        meetingRepo.deleteById(meetingId);
-    }
-
+	/*
+	 * public void deleteMeeting(Integer meetingId) {
+	 * 
+	 * meetingRepo.deleteById(meetingId); }
+	 */
     public void fileComplaint(Complaint complaint) {
 
         complaintRepo.save(complaint);
