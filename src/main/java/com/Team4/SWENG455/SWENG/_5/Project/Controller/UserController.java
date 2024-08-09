@@ -1,6 +1,7 @@
 package com.Team4.SWENG455.SWENG._5.Project.Controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,70 +25,78 @@ public class UserController {
 	@Autowired //for dependency injection
 	UserRepo userRepo;  //used to store, insert or fetch data from mongodb
 	
-	@PostMapping("/register") 
-	public ResponseEntity<String>  register( @RequestParam("firstName") String firstName,
-            @RequestParam("lastName") String lastName,
-            @RequestParam("email") String email,
-            @RequestParam("password") String password) 
-	{
-		
-		User user = new User();
-		String name = firstName + " " + lastName;
-		user.setName(name);
-		user.setEmail(email);
-		user.setPassword(password);
-		
-		userRepo.save(user);
-		System.out.println(user.getName());
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+	@PostMapping("/register")
+	public ResponseEntity<String> register(
+	        @RequestParam("firstName") String firstName,
+	        @RequestParam("lastName") String lastName,
+	        @RequestParam("email") String email,
+	        @RequestParam("password") String password) {
+	    
+	    try {
+	        User user = new User();
+	        user.setUserID(UUID.randomUUID().toString()); // Generate unique ID
+	        String name = firstName + " " + lastName;
+	        user.setName(name);
+	        user.setEmail(email);
+	        user.setPassword(password);
+	        
+	        userRepo.save(user);
+	        System.out.println("Saved user: " + user.getName());
+	        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
 
-	}
 	
-	@GetMapping("/getUser/{id}") 
-	public User getUser(@PathVariable Integer id) 
-	{
-		return userRepo.findById(id).orElse(null);
-	}
+		
 	
+//	@GetMapping("/getUser/{id}") 
+//	public User getUser(@PathVariable Integer id) 
+//	{
+//		return userRepo.findById(id).orElse(null);
+//	}
+//	
 	@GetMapping("/fetchUsers") 
 	public List<User> fetchUsers() 
 	{
 		return userRepo.findAll();
 	}
 	
-	@PutMapping("/updateUser") 
-	public void updateUser(@RequestBody User user)
-	{
-		User data = userRepo.findById(user.getUserID()).orElse(null);
+//	@PutMapping("/updateUser") 
+//	public void updateUser(@RequestBody User user)
+//	{
+//		User data = userRepo.findById(user.getUserID()).orElse(null);
+//	
+//		if(data != null)
+//		{
+//			user.setName(data.getName());
+//			user.setEmail(data.getEmail());
+//			user.setMeetings(data.getMeetings());
+//			user.setPassword(data.getPassword());
+//			user.setUserControl(data.getUserControl());
+//			user.setMeetings(data.getMeetings());
+//			userRepo.save(user);
+//		}
+//		
+//	}
 	
-		if(data != null)
-		{
-			user.setName(data.getName());
-			user.setEmail(data.getEmail());
-			user.setMeetings(data.getMeetings());
-			user.setPassword(data.getPassword());
-			user.setUserControl(data.getUserControl());
-			user.setMeetings(data.getMeetings());
-			userRepo.save(user);
-		}
-		
-	}
-	
-	@DeleteMapping("/deleteUser/{id}") //the function takes in an id
-	public void deleteUser(@PathVariable Integer id) 
-	{
-		userRepo.deleteById(id);
-	}
+//	@DeleteMapping("/deleteUser/{id}") //the function takes in an id
+//	public void deleteUser(@PathVariable Integer id) 
+//	{
+//		userRepo.deleteById(id);
+//	}
 
 
-	public boolean validateCredentials(String email, String password) {
-		User user = userRepo.findByEmail(email);
-		return user != null && user.getPassword().equals(password);
-	}
+//	public boolean validateCredentials(String email, String password) {
+//		User user = userRepo.findByEmail(email);
+//		return user != null && user.getPassword().equals(password);
+//	}
 
-	public List<Meeting> getUserMeetings(Integer userID) {
-		User user = userRepo.findById(userID).orElse(null);
-		return user != null ? user.getMeetings() : null;
-	}
+//	public List<Meeting> getUserMeetings(String userID) {
+//		User user = userRepo.findById(userID).orElse(null);
+//		return user != null ? user.getMeetings() : null;
+//	}
 
 }

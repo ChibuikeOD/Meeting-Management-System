@@ -6,12 +6,12 @@ import com.Team4.SWENG455.SWENG._5.Project.Controller.UserController;
 
 import java.util.List;
 
-@Document
+@Document(collection = "user")
 public class User {
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-    private Integer userID;
+    private String userID;
     
     private String name;
     private String email;
@@ -25,11 +25,11 @@ public class User {
     private UserController userControl;
 
    
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -73,24 +73,24 @@ public class User {
         this.userControl = userControl;
     }
     
-    public boolean login(String username, String password) {
-        return userControl.validateCredentials(email, password);
-    }
+//    public boolean login(String username, String password) {
+//        return userControl.validateCredentials(email, password);
+//    }
 
     public void logout() {
        //needs to log out / clearing session or authentication
     }
 
-    public List<Meeting> viewMeetings() {
-        return userControl.getUserMeetings(userID);
-    }
+//    public List<Meeting> viewMeetings() {
+//        return userControl.getUserMeetings(userID);
+//    }
 
-    public void updateProfile(String name, String email, String password) {
-       this.name = name;
-       this.email = email;
-       this.password = password;
-
-       userControl.updateUser(this);
-    }
+//    public void updateProfile(String name, String email, String password) {
+//       this.name = name;
+//       this.email = email;
+//       this.password = password;
+//
+//       userControl.updateUser(this);
+//    }
 }
     
