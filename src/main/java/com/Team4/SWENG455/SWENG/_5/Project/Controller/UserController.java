@@ -1,6 +1,9 @@
 package com.Team4.SWENG455.SWENG._5.Project.Controller;
 
+import java.net.URI;
+import java.net.http.HttpHeaders;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +45,9 @@ public class UserController {
 	        
 	        userRepo.save(user);
 	        System.out.println("Saved user: " + user.getName());
-	        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+	        return ResponseEntity.status(HttpStatus.FOUND)
+                    .location(URI.create("/login.html"))
+                    .build();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return new ResponseEntity<>("Failed to register user", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -52,12 +57,34 @@ public class UserController {
 	
 		
 	
-//	@GetMapping("/getUser/{id}") 
-//	public User getUser(@PathVariable Integer id) 
-//	{
-//		return userRepo.findById(id).orElse(null);
-//	}
-//	
+	@PostMapping("/login")
+	public ResponseEntity<String> login(
+	        @RequestParam("email") String email,
+	        @RequestParam("password") String password) {
+	    
+	    try {
+	        // Attempt to find the user by email
+	        Optional<User> optionalUser = userRepo.findByEmail(email);
+	        
+	        if (optionalUser.isPresent()) {
+	            User user = optionalUser.get();
+	            
+	            // Check if the provided password matches the stored password
+	            if (user.getPassword().equals(password)) {
+	                return new ResponseEntity<>("Login successful", HttpStatus.OK);
+	            } else {
+	                return new ResponseEntity<>("Login failed: Incorrect password", HttpStatus.UNAUTHORIZED);
+	            }
+	        } else {
+	            return new ResponseEntity<>("Login failed: Email not found", HttpStatus.UNAUTHORIZED);
+	        }
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new ResponseEntity<>("An error occurred during login", HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+	
 	@GetMapping("/fetchUsers") 
 	public List<User> fetchUsers() 
 	{
