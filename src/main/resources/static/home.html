@@ -13,9 +13,7 @@
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="home.html">PennStateSoft</a>
-        <!-- Navbar-->
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
@@ -32,12 +30,10 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <!--Meetings-->
                         <a class="nav-link" href="home.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Meetings
                         </a>
-                        <!--Complaint-->
                         <a class="nav-link collapsed" href="complaint.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-mail-bulk"></i></div>
                             Complaint
@@ -52,49 +48,22 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <!--Meetings-->
                     <h1 class="mt-4">Meetings</h1>
                     <a href="createMeeting.html" class="btn btn-primary mt-1 mb-3 btn-lg btn-block">Create Meeting</a>
+
                     <div class="container">
                         <div class="table-responsive">
                             <table class="table table-bordered text-center">
                                 <thead>
                                     <tr class="bg-light-gray">
-                                        <th class="text-uppercase">Time</th>
-                                        <th class="text-uppercase">Monday</th>
-                                        <th class="text-uppercase">Tuesday</th>
-                                        <th class="text-uppercase">Wednesday</th>
-                                        <th class="text-uppercase">Thursday</th>
-                                        <th class="text-uppercase">Friday</th>
+                                        <th class="text-uppercase">Title</th>
+                                        <th class="text-uppercase">Description</th>
+                                        <th class="text-uppercase">Start Time</th>
+                                        <th class="text-uppercase">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <!--9-->
-                                        <td class="align-middle">09:00am</td>
-                                        <td class="bg-light-gray">
-                                            <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Meeting Title</span>
-                                            <div class="margin-10px-top font-size14">9:00-10:00</div>
-                                            <div class="font-size13 text-light-gray">Room 001</div>
-                                        </td>
-                                        <td class="bg-light-gray"></td>
-                                        <td class="bg-light-gray"></td>
-                                        <td class="bg-light-gray"></td>
-                                        <td class="bg-light-gray"></td>
-                                    </tr>
-                                    <tr>
-                                        <!--10-->
-                                        <td class="align-middle">10:00am</td>
-                                        <td class="bg-light-gray"></td>
-                                        <td class="bg-light-gray">
-                                            <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Meeting Title</span>
-                                            <div class="margin-10px-top font-size14">10:00-11:00</div>
-                                            <div class="font-size13 text-light-gray">Room 002</div>
-                                        </td>
-                                        <td class="bg-light-gray"></td>
-                                        <td class="bg-light-gray"></td>
-                                        <td class="bg-light-gray"></td>
-                                    </tr>
+                                <tbody id="meetings-table-body">
+                                    <!-- Meeting rows will be injected here by JavaScript -->
                                 </tbody>
                             </table>
                         </div>
@@ -110,10 +79,33 @@
             </footer>
         </div>
     </div>
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- Custom scripts -->
     <script src="js/scripts.js"></script>
+    <!-- Fetch and display meetings -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/api/meetings')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('meetings-table-body');
+                    data.forEach(meeting => {
+                        let row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${meeting.title}</td>
+                            <td>${meeting.description}</td>
+                            <td>${meeting.startTime}</td>
+                            <td>
+                                <form action="/joinMeeting/${meeting.meetingID}" method="post">
+                                    <button type="submit" class="btn btn-success">Join</button>
+                                </form>
+                            </td>`;
+                        tableBody.appendChild(row);
+                    });
+                });
+        });
+    </script>
 </body>
 </html>
