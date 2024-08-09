@@ -1,23 +1,35 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
-import org.springframework.data.mongodb.core.mapping.*;
+import com.Team4.SWENG455.SWENG._5.Project.Repository.ComplaintRepo;
+import com.Team4.SWENG455.SWENG._5.Project.Repository.MeetingRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
-
-@Document
+@Service
 public class Client extends User {
-	public void createMeeting() {
-        
+    @Autowired
+    private MeetingRepo meetingRepo;
+
+    @Autowired
+    private ComplaintRepo complaintRepo;
+
+    public void createMeeting(Meeting meeting) {
+
+        meetingRepo.save(meeting);
     }
 
-    public void editMeeting() {
-        
+    public void editMeeting(Meeting meeting) {
+
+        meetingRepo.save(meeting);
     }
 
-    public void deleteMeeting() {
-       
+    public void deleteMeeting(Integer meetingId) {
+
+        meetingRepo.deleteById(meetingId);
     }
 
-    public void fileComplaint() {
-       
+    public void fileComplaint(Complaint complaint) {
+
+        complaintRepo.save(complaint);
     }
 }

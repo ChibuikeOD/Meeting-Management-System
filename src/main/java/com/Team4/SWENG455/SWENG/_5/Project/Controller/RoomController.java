@@ -59,10 +59,15 @@ public class RoomController {
 	}
 	
 	@DeleteMapping("/deleteRoom/{id}") //the function takes in an id
-	public void deleteRoom(@PathVariable Integer id) 
-	{
-		roomRepo.deleteById(id);
+	//Removed @PathVariable Integer id
+	public void deleteRoom(Room room) {roomRepo.deleteById(room.getRoomID());}
+
+
+    public void editRoom(Room room) {
+		roomRepo.save(room);
+    }
+
+	public Room viewRoomDetails(Room room) {
+		return roomRepo.findById(room.getRoomID()).orElse(null);
 	}
-
-
 }

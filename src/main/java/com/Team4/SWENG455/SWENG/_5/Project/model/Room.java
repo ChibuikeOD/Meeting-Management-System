@@ -1,4 +1,5 @@
 package com.Team4.SWENG455.SWENG._5.Project.model;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.*;
 
 import com.Team4.SWENG455.SWENG._5.Project.Controller.RoomController;
@@ -15,26 +16,44 @@ public class Room {
     
     private String name;
     private int capacity;
-    
-   
+
+
+    @Autowired
     private RoomController roomControl;
 
    
     
     public void addRoom() {
-       
+        if (roomControl != null) {
+            roomControl.addRoom(this);
+        } else {
+            throw new IllegalStateException("RoomController is not set.");
+        }
     }
 
     public void editRoom() {
-        
+        if (roomControl != null) {
+            roomControl.editRoom(this);
+        } else {
+            throw new IllegalStateException("RoomController is not set.");
+        }
     }
 
     public void deleteRoom() {
-        
+        if (roomControl != null) {
+            roomControl.deleteRoom(this);
+        } else {
+            throw new IllegalStateException("RoomController is not set.");
+        }
     }
 
+
     public void viewRoomDetails() {
-       
+        if (roomControl != null) {
+            roomControl.viewRoomDetails(this);
+        } else {
+            throw new IllegalStateException("RoomController is not set.");
+        }
     }
     
     public int getRoomID() {

@@ -73,20 +73,24 @@ public class User {
         this.userControl = userControl;
     }
     
-    public void login() {
-       
+    public boolean login(String username, String password) {
+        return userControl.validateCredentials(email, password);
     }
 
     public void logout() {
-       
+       //needs to log out / clearing session or authentication
     }
 
-    public void viewMeetings() {
-        
+    public List<Meeting> viewMeetings() {
+        return userControl.getUserMeetings(userID);
     }
 
-    public void updateProfile() {
-       
+    public void updateProfile(String name, String email, String password) {
+       this.name = name;
+       this.email = email;
+       this.password = password;
+
+       userControl.updateUser(this);
     }
 }
     

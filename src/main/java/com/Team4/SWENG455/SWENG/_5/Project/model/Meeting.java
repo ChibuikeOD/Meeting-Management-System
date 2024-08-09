@@ -3,6 +3,7 @@ import org.springframework.data.mongodb.core.mapping.*;
 
 import com.Team4.SWENG455.SWENG._5.Project.Controller.MeetingController;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.annotation.*;
 
@@ -19,7 +20,7 @@ public class Meeting {
     
     private MeetingController meetingControl;
  //   @ManyToMany
-    private List<User> participants;
+    private List<User> participants = new ArrayList<>();
 
     public int getMeetingID() {
         return meetingID;
@@ -68,27 +69,32 @@ public class Meeting {
     public void setParticipants(List<User> participants) {
         this.participants = participants;
     }
-        
-    public void updateMeeting() {
-        
+
+    public void addParticipant(User newUser) {
+        if(!participants.contains(newUser)) {
+            participants.add(newUser);
+        }
+    }
+    public void removeParticipant(User User) {
+        participants.remove(User);
+    }
+
+    public void updateMeeting(String title, String description) {
+        this.title = title;
+        this.description = description;
+        //Start and end time using LocalDateTime maybe
     }
 
     public void cancelMeeting() {
        
     }
 
-    public void addParticipant(User newUser) {
-        participants.add(newUser);
-    }
 
-    public void removeParticipant(User newUser) {
-        
-    
-    }
-    
+
+
     public void setMeetingController(MeetingController m)
     {
-    	meetingControl = m;
+    	this.meetingControl = m;
     }
     
     public MeetingController getMeetingController()

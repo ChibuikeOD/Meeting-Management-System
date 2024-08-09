@@ -63,4 +63,15 @@ public class UserController {
 		userRepo.deleteById(id);
 	}
 
+
+	public boolean validateCredentials(String email, String password) {
+		User user = userRepo.findByEmail(email);
+		return user != null && user.getPassword().equals(password);
+	}
+
+	public List<Meeting> getUserMeetings(Integer userID) {
+		User user = userRepo.findById(userID).orElse(null);
+		return user != null ? user.getMeetings() : null;
+	}
+
 }
