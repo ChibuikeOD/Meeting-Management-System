@@ -11,9 +11,9 @@ import org.springframework.data.annotation.*;
 public class Complaint {
     @Id
   //  @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer complaintID;
+    private String complaintID;
     
-    private int userID;
+    private String userID;
     private String description;
     private String status;
     
@@ -22,19 +22,19 @@ public class Complaint {
   
     private ComplaintController complaintControl;
 
-    public int getComplaintID() {
+    public String getComplaintID() {
         return complaintID;
     }
 
-    public void setComplaintID(int complaintID) {
+    public void setComplaintID(String complaintID) {
         this.complaintID = complaintID;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
