@@ -20,7 +20,6 @@ window.addEventListener('DOMContentLoaded', event => {
 
     if (meetingTimeField) {
         meetingTimeField.addEventListener('blur', event => {
-            console.log(meetingTimeField.value);
             if (meetingTimeField.value < meetingTimeField.min) {
                 meetingTimeField.value = meetingTimeField.min;
             } else if (meetingTimeField.value > meetingTimeField.max) {
@@ -54,10 +53,8 @@ window.addEventListener('DOMContentLoaded', event => {
             })
             .then(response => {
                 if (response.ok) {
-                    // Close the modal, refresh the meeting list, etc.
                     modal.hide();
                     alert('Meeting created successfully!');
-                    // Optionally refresh the meeting list here
                 } else {
                     alert('Failed to create meeting.');
                 }
@@ -68,4 +65,29 @@ window.addEventListener('DOMContentLoaded', event => {
             });
         });
     }
+
+    // Form validation for registration
+    const form = document.querySelector('form[action="/register"]');
+    const passwordField = document.getElementById('inputPassword');
+    const confirmPasswordField = document.getElementById('inputPasswordConfirm');
+
+    form.addEventListener('submit', function(event) {
+        const password = passwordField.value;
+        const confirmPassword = confirmPasswordField.value;
+
+        // Check if password meets criteria
+        const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+        if (!passwordPattern.test(password)) {
+            alert('Password must be at least 8 characters long and contain at least one number and one special character.');
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+
+        // Check if password and confirm password match
+        if (password !== confirmPassword) {
+            alert('Password and Confirm Password do not match.');
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+    });
 });
